@@ -68,6 +68,8 @@ int get_timer3_flag() {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	timer_run();
 	if (htim->Instance == TIM2) {
-		button_reading();
+		//button_reading();
+		//init for Ex3
+
 	}
 }
