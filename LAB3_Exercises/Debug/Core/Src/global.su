@@ -1,2 +1,2 @@
-global.c:13:6:LedTimeDurationInit	4	static
-global.c:22:5:getMode	4	static
+global.c:15:6:LedTimeDurationInit	4	static
+global.c:24:5:getMode	4	static

@@ -1,13 +1,10 @@
 /*
- * led_display.c
+ * traffic_light.c
  *
- *  Created on: Oct 27, 2024
+ *  Created on: Nov 14, 2024
  *      Author: USER
  */
-
-
-#include <traffic_light.h>
-
+#include "traffic_light.h"
 enum LEDState {RED, YELLOW, GREEN};
 
 static void display7SEG(int num) {

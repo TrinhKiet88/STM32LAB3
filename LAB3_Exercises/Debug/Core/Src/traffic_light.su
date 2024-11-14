@@ -1,7 +1,7 @@
-traffic_light.c:13:13:display7SEG	16	static
-traffic_light.c:115:6:resetCountValue	4	static
-traffic_light.c:122:6:NormalMode	8	static
-traffic_light.c:208:12:get7SEG1Value	4	static
-traffic_light.c:223:12:get7SEG2Value	4	static
-traffic_light.c:240:6:LedDispMode	8	static
-traffic_light.c:287:6:LEDScanning	8	static
+traffic_light.c:10:13:display7SEG	16	static
+traffic_light.c:112:6:resetCountValue	4	static
+traffic_light.c:119:6:NormalMode	8	static
+traffic_light.c:205:12:get7SEG1Value	4	static
+traffic_light.c:220:12:get7SEG2Value	4	static
+traffic_light.c:237:6:LedDispMode	8	static
+traffic_light.c:284:6:LEDScanning	8	static

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2023 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -22,7 +21,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "input_processing.h"
+#include "traffic_light.h"
+#include "input_reading.h"
+#include "software_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,7 +42,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-TIM_HandleTypeDef htim2;
+ TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 
@@ -89,30 +91,29 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-    init_buffer();
-    LedTimeDurationInit();
-    setTimer0(1);
-    setTimer1(1);
-    setTimer2(1);
-    setTimer3(1);
+  init_buffer();
+  LedTimeDurationInit();
+  setTimer0(1);
+  setTimer1(1);
+  setTimer2(1);
+  setTimer3(1);
   while (1)
   {
-    /* USER CODE END WHILE */
 	  UpdateMode();
-	 	  if (get_timer2_flag()) {
-	 		  LEDScanning();
-	 		  setTimer2(1);
-	 	  }
+	  if (get_timer2_flag()) {
+		  LEDScanning();
+		  setTimer2(1);
+	  }
 
-	 	  LedDispMode();
-	 	  UpdateDurationValue();
+	  LedDispMode();
+	  UpdateDurationValue();
 
-
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -139,6 +140,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -214,31 +216,37 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
-                          |SEG4_Pin|SEG5_Pin|SEG6_Pin|EN0_Pin
-                          |EN1_Pin|EN2_Pin|EN3_Pin|MODE_Pin, GPIO_PIN_RESET);
+                          |SEG4_Pin|SEG5_Pin|SEG6_Pin
+                          |EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin
+                          |MODE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, BUTTON_1_Pin|BUTTON_2_Pin|BUTTON_3_Pin|G1_Pin
-                          |R2_Pin|Y2_Pin|G2_Pin|R1_Pin
-                          |Y1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, G1_Pin|R2_Pin|Y2_Pin|G2_Pin
+                          |R1_Pin|Y1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : SEG0_Pin SEG1_Pin SEG2_Pin SEG3_Pin
-                           SEG4_Pin SEG5_Pin SEG6_Pin EN0_Pin
-                           EN1_Pin EN2_Pin EN3_Pin MODE_Pin */
+                           SEG4_Pin SEG5_Pin SEG6_Pin LED_RED_Pin
+                           EN0_Pin EN1_Pin EN2_Pin EN3_Pin
+                           MODE_Pin */
   GPIO_InitStruct.Pin = SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
-                          |SEG4_Pin|SEG5_Pin|SEG6_Pin|EN0_Pin
-                          |EN1_Pin|EN2_Pin|EN3_Pin|MODE_Pin;
+                          |SEG4_Pin|SEG5_Pin|SEG6_Pin
+                          |EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin
+                          |MODE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUTTON_1_Pin BUTTON_2_Pin BUTTON_3_Pin G1_Pin
-                           R2_Pin Y2_Pin G2_Pin R1_Pin
-                           Y1_Pin */
-  GPIO_InitStruct.Pin = BUTTON_1_Pin|BUTTON_2_Pin|BUTTON_3_Pin|G1_Pin
-                          |R2_Pin|Y2_Pin|G2_Pin|R1_Pin
-                          |Y1_Pin;
+  /*Configure GPIO pins : BUTTON_1_Pin BUTTON_2_Pin BUTTON_3_Pin */
+  GPIO_InitStruct.Pin = BUTTON_1_Pin|BUTTON_2_Pin|BUTTON_3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : G1_Pin R2_Pin Y2_Pin G2_Pin
+                           R1_Pin Y1_Pin */
+  GPIO_InitStruct.Pin = G1_Pin|R2_Pin|Y2_Pin|G2_Pin
+                          |R1_Pin|Y1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -281,5 +289,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
