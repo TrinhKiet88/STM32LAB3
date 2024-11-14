@@ -5,8 +5,8 @@
  *      Author: USER
  */
 
-#ifndef INC_TIMER_H_
-#define INC_TIMER_H_
+#ifndef INC_SOFTWARE_TIMER_H_
+#define INC_SOFTWARE_TIMER_H_
 
 #include "main.h"
 #include "input_reading.h"
@@ -22,4 +22,4 @@ void setTimer2(int duration);
 int get_timer3_flag();
 void setTimer3(int duration);
 
-#endif /* INC_TIMER_H_ */
+#endif /* INC_SOFTWARE_TIMER_H_ */

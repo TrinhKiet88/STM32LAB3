@@ -6,7 +6,7 @@
  */
 
 
-#include "timer.h"
+#include "software_timer.h"
 
 int timer0_counter = 0;
 int timer0_flag = 0;

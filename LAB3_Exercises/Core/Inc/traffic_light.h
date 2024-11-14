@@ -5,15 +5,15 @@
  *      Author: USER
  */
 
-#ifndef INC_LED_DISPLAY_H_
-#define INC_LED_DISPLAY_H_
+#ifndef INC_TRAFFIC_LIGHT_H_
+#define INC_TRAFFIC_LIGHT_H_
 
 #include "main.h"
-#include "timer.h"
+#include "software_timer.h"
 #include "global.h"
 
 void LedDispMode();
 void LEDScanning();
 void resetCountValue();
 
-#endif /* INC_LED_DISPLAY_H_ */
+#endif /* INC_TRAFFIC_LIGHT_H_ */

@@ -1,13 +1,13 @@
 /*
  * input_reading.c
  *
- *  Created on: Oct 27, 2024
+ *  Created on: Nov 14, 2024
  *      Author: USER
  */
 
 #include "input_reading.h"
 
-#define NUM_OF_BUTTONS					3
+#define NO_OF_BUTTONS					3
 
 #define DURATION_FOR_AUTO_INCREASING	200 / TIMER_CYCLE
 #define DURATION_FOR_HOLD				50 / TIMER_CYCLE
@@ -15,19 +15,19 @@
 #define BUTTON_IS_PRESSED				GPIO_PIN_RESET
 #define BUTTON_IS_RELEASED				GPIO_PIN_SET
 
-static GPIO_PinState buttonBuffer[NUM_OF_BUTTONS];
+static GPIO_PinState buttonBuffer[NO_OF_BUTTONS];
 
-static GPIO_PinState debounceButtonBufer1[NUM_OF_BUTTONS];
-static GPIO_PinState debounceButtonBufer2[NUM_OF_BUTTONS];
-static GPIO_PinState debounceButtonBufer3[NUM_OF_BUTTONS];
+static GPIO_PinState debounceButtonBufer1[NO_OF_BUTTONS];
+static GPIO_PinState debounceButtonBufer2[NO_OF_BUTTONS];
+static GPIO_PinState debounceButtonBufer3[NO_OF_BUTTONS];
 
-static uint8_t flagForButtonPress1s[NUM_OF_BUTTONS];
-static uint8_t flagForButtonHold[NUM_OF_BUTTONS];
-static uint16_t counterForButtonPress1s[NUM_OF_BUTTONS];
-static uint16_t counterForButtonHold[NUM_OF_BUTTONS];
+static uint8_t flagForButtonPress1s[NO_OF_BUTTONS];
+static uint8_t flagForButtonHold[NO_OF_BUTTONS];
+static uint16_t counterForButtonPress1s[NO_OF_BUTTONS];
+static uint16_t counterForButtonHold[NO_OF_BUTTONS];
 
 void init_buffer() {
-	for (int i = 0; i < NUM_OF_BUTTONS; i++) {
+	for (int i = 0; i < NO_OF_BUTTONS; i++) {
 		buttonBuffer[i] = BUTTON_IS_RELEASED;
 		debounceButtonBufer1[i] = BUTTON_IS_RELEASED;
 		debounceButtonBufer2[i] = BUTTON_IS_RELEASED;
@@ -40,7 +40,7 @@ void init_buffer() {
 }
 
 void button_reading(void) {
-	for (int i = 0; i < NUM_OF_BUTTONS; i++) {
+	for (int i = 0; i < NO_OF_BUTTONS; i++) {
 		debounceButtonBufer3[i] = debounceButtonBufer2[i];
 		debounceButtonBufer2[i] = debounceButtonBufer1[i];
 		debounceButtonBufer1[i] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, (1U << i));
@@ -74,17 +74,17 @@ void button_reading(void) {
 }
 
 unsigned char is_button_pressed(unsigned char index) {
-	if (index >= NUM_OF_BUTTONS) return 0;
+	if (index >= NO_OF_BUTTONS) return 0;
 	return (buttonBuffer[index] == BUTTON_IS_PRESSED);
 }
 
 unsigned char is_button_pressed_1s(unsigned char index) {
-	if (index >= NUM_OF_BUTTONS) return 0;
+	if (index >= NO_OF_BUTTONS) return 0;
 	return (flagForButtonPress1s[index] == 1);
 }
 
 unsigned char is_button_held(unsigned char index) {
-	if (index >= NUM_OF_BUTTONS) return 0;
+	if (index >= NO_OF_BUTTONS) return 0;
 	return (flagForButtonHold[index] == 1);
 }
 

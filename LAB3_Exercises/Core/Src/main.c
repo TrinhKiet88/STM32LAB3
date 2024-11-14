@@ -94,9 +94,25 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+    init_buffer();
+    LedTimeDurationInit();
+    setTimer0(1);
+    setTimer1(1);
+    setTimer2(1);
+    setTimer3(1);
   while (1)
   {
     /* USER CODE END WHILE */
+	  UpdateMode();
+	 	  if (get_timer2_flag()) {
+	 		  LEDScanning();
+	 		  setTimer2(1);
+	 	  }
+
+	 	  LedDispMode();
+	 	  UpdateDurationValue();
+
+
 
     /* USER CODE BEGIN 3 */
   }

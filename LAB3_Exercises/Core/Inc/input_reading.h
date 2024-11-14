@@ -1,7 +1,7 @@
 /*
  * input_reading.h
  *
- *  Created on: Oct 27, 2024
+ *  Created on: Nov 14, 2024
  *      Author: USER
  */
 
@@ -9,7 +9,7 @@
 #define INC_INPUT_READING_H_
 
 #include "main.h"
-#include "timer.h"
+#include "software_timer.h"
 
 void init_buffer();
 void button_reading(void);

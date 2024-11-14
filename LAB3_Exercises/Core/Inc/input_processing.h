@@ -1,7 +1,7 @@
 /*
  * input_processing.h
  *
- *  Created on: Oct 27, 2024
+ *  Created on: Nov 14, 2024
  *      Author: USER
  */
 
@@ -10,12 +10,13 @@
 
 #include "main.h"
 #include "input_reading.h"
-#include "led_display.h"
-#include "timer.h"
+#include "traffic_light.h"
+#include "software_timer.h"
 #include "global.h"
 
 void UpdateMode();
 void LedTimeDurationInit();
 void UpdateDurationValue();
+
 
 #endif /* INC_INPUT_PROCESSING_H_ */
