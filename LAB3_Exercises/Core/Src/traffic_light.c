@@ -1,10 +1,5 @@
-/*
- * traffic_light.c
- *
- *  Created on: Nov 14, 2024
- *      Author: USER
- */
 #include "traffic_light.h"
+
 enum LEDState {RED, YELLOW, GREEN};
 
 static void display7SEG(int num) {
@@ -104,12 +99,16 @@ static void display7SEG(int num) {
 	}
 }
 
+
 int count1 = RED_INIT;
 int count2 = GREEN_INIT;
 enum LEDState state1 = RED;
 enum LEDState state2 = GREEN;
 
+
+
 void resetCountValue() {
+
 	count1 = red_value;
 	count2 = green_value;
 	state1 = RED;
@@ -117,6 +116,7 @@ void resetCountValue() {
 }
 
 void NormalMode() {
+
 	count1--;
 	count2--;
 	switch (state1) {
@@ -238,24 +238,24 @@ void LedDispMode() {
 	switch (mode) {
 		case 1:
 			if (get_timer0_flag()) {
-				setTimer0(250);
+				setTimer0(100);
 				NormalMode();
 			}
 			break;
 		case 2:
-			if (get_timer0_flag()) {
-				setTimer0(200);
-				HAL_GPIO_TogglePin(R1_GPIO_Port, R1_Pin);
-				HAL_GPIO_TogglePin(R2_GPIO_Port, R2_Pin);
-				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(Y2_GPIO_Port, Y2_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(G2_GPIO_Port, G2_Pin, GPIO_PIN_RESET);
-			}
-			break;
+					if (get_timer0_flag()) {
+						setTimer0(100);
+						HAL_GPIO_TogglePin(R1_GPIO_Port, R1_Pin);
+						HAL_GPIO_TogglePin(R2_GPIO_Port, R2_Pin);
+						HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, GPIO_PIN_RESET);
+						HAL_GPIO_WritePin(G1_GPIO_Port, G1_Pin, GPIO_PIN_RESET);
+						HAL_GPIO_WritePin(Y2_GPIO_Port, Y2_Pin, GPIO_PIN_RESET);
+						HAL_GPIO_WritePin(G2_GPIO_Port, G2_Pin, GPIO_PIN_RESET);
+					}
+					break;
 		case 3:
 			if (get_timer0_flag()) {
-				setTimer0(200);
+				setTimer0(100);
 				HAL_GPIO_TogglePin(Y1_GPIO_Port, Y1_Pin);
 				HAL_GPIO_TogglePin(Y2_GPIO_Port, Y2_Pin);
 				HAL_GPIO_WritePin(R1_GPIO_Port, R1_Pin, GPIO_PIN_RESET);
@@ -266,7 +266,7 @@ void LedDispMode() {
 			break;
 		case 4:
 			if (get_timer0_flag()) {
-				setTimer0(200);
+				setTimer0(100);
 				HAL_GPIO_TogglePin(G1_GPIO_Port, G1_Pin);
 				HAL_GPIO_TogglePin(G2_GPIO_Port, G2_Pin);
 				HAL_GPIO_WritePin(Y1_GPIO_Port, Y1_Pin, GPIO_PIN_RESET);
@@ -333,3 +333,6 @@ void LEDScanning() {
 			break;
 	}
 }
+
+
+

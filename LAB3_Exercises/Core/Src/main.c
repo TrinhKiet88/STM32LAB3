@@ -102,6 +102,7 @@ int main(void)
   setTimer1(1);
   setTimer2(1);
   setTimer3(1);
+
   while (1)
   {
 	  UpdateMode();
@@ -112,6 +113,12 @@ int main(void)
 
 	  LedDispMode();
 	  UpdateDurationValue();
+
+	  if (get_timer1_flag()) {
+		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		  setTimer1(250);
+	  }
+
 
     /* USER CODE END WHILE */
 
@@ -175,7 +182,7 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 799;
+  htim2.Init.Prescaler = 7999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim2.Init.Period = 9;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -216,7 +223,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
-                          |SEG4_Pin|SEG5_Pin|SEG6_Pin
+                          |SEG4_Pin|SEG5_Pin|SEG6_Pin|LED_RED_Pin
                           |EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin
                           |MODE_Pin, GPIO_PIN_RESET);
 
@@ -229,7 +236,7 @@ static void MX_GPIO_Init(void)
                            EN0_Pin EN1_Pin EN2_Pin EN3_Pin
                            MODE_Pin */
   GPIO_InitStruct.Pin = SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
-                          |SEG4_Pin|SEG5_Pin|SEG6_Pin
+                          |SEG4_Pin|SEG5_Pin|SEG6_Pin|LED_RED_Pin
                           |EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin
                           |MODE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
